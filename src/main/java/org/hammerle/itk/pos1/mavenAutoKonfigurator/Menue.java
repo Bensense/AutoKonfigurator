@@ -1,3 +1,4 @@
+package org.hammerle.itk.pos1.mavenAutoKonfigurator;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -6,16 +7,29 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class Menue {
+/**
+ * @author Benjamin Hammerle
+ * @version 10.10.2018
+ */
+public class Menue implements AutoKonfigurator {
+    /**
+     * Liste der Plattformen
+     */
     private List<Plattform> listePlattformen;
     Scanner scan = new Scanner(System.in);
 
-    // Konstruktor
-
+    /**
+     * Konstruktor Menue
+     */
     public Menue() {
         listePlattformen = new ArrayList<>();
+        fuelleMenue();
     }
 
+    /**
+     * Methode fuer Scanner-Eingabe mit Fehler-Ueberpruefung
+     * @return Integer
+     */
     public int intEingabe() {
         int eingabe = 0;
         boolean korrekt = false;
@@ -35,10 +49,18 @@ public class Menue {
         return eingabe;
     }
 
+    /**
+     * Methode fuegt eine Plattform hinzu
+     * @param plattform
+     */
     public void addPlattform(Plattform plattform) {
         this.listePlattformen.add(plattform);
     }
 
+    /**
+     * gibt Liste Plattformen aus
+     * @return listePlattformen
+     */
     public List<Plattform> getListePlattformen() {
         int i = 0;
         for(Plattform pf : this.listePlattformen) {
@@ -47,13 +69,28 @@ public class Menue {
         }
         return this.listePlattformen;
     }
+
+    /**
+     * gibt Liste Plattformen zurueck
+     * @return listePlattformen
+     */
     public List<Plattform> returnListePlattformen() {
         return this.listePlattformen;
     }
+
+    /**
+     * gibt Plattform aus liste zurueck via Index
+     * @param index
+     * @return plattform
+     */
     public Plattform getPlattform(int index) {
         return this.listePlattformen.get(index);
     }
 
+    /**
+     * Untermenue Plattform auswaehlen
+     * @return Plattform
+     */
     public Plattform waehlePlattform() {
         Plattform bestellung = null;
         int auswahl;
@@ -82,6 +119,11 @@ public class Menue {
         return bestellung;
     }
 
+    /**
+     * Untermenue Ausstattung auswaehlen
+     * @param plattform
+     * @return Ausstattung
+     */
     public Ausstattung waehleAusstattung(Plattform plattform) {
         Ausstattung bestellung = null;
         int auswahl;
@@ -116,6 +158,11 @@ public class Menue {
         return bestellung;
     }
 
+    /**
+     * Untermenue Bestellung ueberpruefen, aendern, abschicken, beenden
+     * @param auto
+     * @param model
+     */
     public void pruefBestellung(Plattform auto, Ausstattung model){
         int eingabe;
         int kostenGesamt;
@@ -150,7 +197,7 @@ public class Menue {
                 break;
             case 8:
                 System.out.println("Vielen Dank fuer Ihre Bestellung");
-                break;
+                // break;
             case 9:
                 System.out.println("Auf Wiedersehen!");
                 System.exit(0);
@@ -162,27 +209,25 @@ public class Menue {
         }
     }
 
-    /*
-    Main-Methode
-    */
-    public static void main(String[] args) {
-        Menue m = new Menue();
+    /**
+     * fuellt ListePlattformen mit Plattformen und dazugehoerigen Ausstattungen
+     */
+    public void fuelleMenue() {
 
         Plattform golf = new Plattform("Golf", 10000, "Sport", 2000);
         golf.addAusstattung("Luxus", 3500);
         golf.addAusstattung("Minimal", 500);
-        m.addPlattform(golf);
+        addPlattform(golf);
         Plattform passat = new Plattform("Passat", 12000, "Limosine", 3000);
         passat.addAusstattung("Standart", 0);
         passat.addAusstattung("All Incl", 4000);
         passat.addAusstattung("Sport" , 3600);
-        m.addPlattform(passat);
+        addPlattform(passat);
         Plattform sharan = new Plattform("Sharan", 14000, "Luxus", 5000);
         sharan.addAusstattung("Standart", 0);
         sharan.addAusstattung("Sport", 3500);
-        m.addPlattform(sharan);
+        addPlattform(sharan);
 
-        m.waehlePlattform();
     }
 
 }
